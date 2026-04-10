@@ -1,0 +1,90 @@
+@model Secondary_School_Result_Management_System.ViewModel.EnterResultViewModel
+@{
+    ViewData["Title"] = "Enter Results";
+}
+
+<div style="max-width:600px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Enter Results</div>
+            <div class="section-sub">Record CA and exam scores for a student</div>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert-edu-success">
+            <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+        </div>
+    }
+
+    <div class="edu-card">
+        <form asp-action="Enter" asp-controller="Result" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Term</label>
+                <select asp-for="TermId" class="form-control-edu">
+                    <option value="">-- Select Term --</option>
+                    @foreach (var term in ViewBag.Terms as List<Secondary_School_Result_Management_System.Models.Entities.Term> ?? new())
+                    {
+                        <option value="@term.Id">@term.Name — @term.AcademicSession</option>
+                    }
+                </select>
+                <span asp-validation-for="TermId" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Student</label>
+                <select asp-for="StudentId" class="form-control-edu">
+                    <option value="">-- Select Student --</option>
+                    @foreach (var student in ViewBag.Students as List<Secondary_School_Result_Management_System.Models.Entities.Student> ?? new())
+                    {
+                        <option value="@student.Id">@student.FullName (@student.PersonalId)</option>
+                    }
+                </select>
+                <span asp-validation-for="StudentId" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Subject</label>
+                <select asp-for="SubjectId" class="form-control-edu">
+                    <option value="">-- Select Subject --</option>
+                    @foreach (var subject in ViewBag.Subjects as List<Secondary_School_Result_Management_System.Models.Entities.Subject> ?? new())
+                    {
+                        <option value="@subject.Id">@subject.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="SubjectId" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+                <div>
+                    <label class="form-label-edu">CA Score <span style="color:var(--text-muted); font-weight:400;">(0 - 40)</span></label>
+                    <input asp-for="CAScore" type="number" min="0" max="40" class="form-control-edu" placeholder="0" />
+                    <span asp-validation-for="CAScore" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+                <div>
+                    <label class="form-label-edu">Exam Score <span style="color:var(--text-muted); font-weight:400;">(0 - 60)</span></label>
+                    <input asp-for="ExamScore" type="number" min="0" max="60" class="form-control-edu" placeholder="0" />
+                    <span asp-validation-for="ExamScore" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+            </div>
+
+            <div style="background:var(--navy); border:1px solid var(--navy-border); border-radius:8px; padding:12px 16px; margin-bottom:24px; font-size:13px; color:var(--text-muted);">
+                <i class="bi bi-info-circle" style="color:var(--accent);"></i>
+                Total score will be calculated automatically. CA (40) + Exam (60) = 100 marks total.
+                Duplicate entries for the same student, subject and term are prevented.
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-save-fill"></i> Save Result
+                </button>
+                <a href="/Admin" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

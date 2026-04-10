@@ -1,0 +1,42 @@
+@model Secondary_School_Result_Management_System.ViewModel.CreateTermViewModel
+@{
+    ViewData["Title"] = "Add Term";
+}
+
+<div style="max-width:500px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Add Term</div>
+            <div class="section-sub">Create a new academic term</div>
+        </div>
+        <a href="/Admin/Terms" class="btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="edu-card">
+        <form asp-action="CreateTerm" asp-controller="Admin" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Term Name</label>
+                <input asp-for="Name" class="form-control-edu" placeholder="e.g. First Term" />
+                <span asp-validation-for="Name" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="margin-bottom:24px;">
+                <label class="form-label-edu">Academic Session</label>
+                <input asp-for="AcademicSession" class="form-control-edu" placeholder="e.g. 2024/2025" />
+                <span asp-validation-for="AcademicSession" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-calendar3"></i> Create Term
+                </button>
+                <a href="/Admin/Terms" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

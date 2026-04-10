@@ -1,0 +1,70 @@
+@model List<Secondary_School_Result_Management_System.Models.Entities.Student>
+@{
+    ViewData["Title"] = "Students";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-edu-success">
+        <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+    </div>
+}
+
+<div class="section-header">
+    <div>
+        <div class="section-title">Students</div>
+        <div class="section-sub">Manage all enrolled students</div>
+    </div>
+    <a href="/Admin/CreateStudent" class="btn-accent">
+        <i class="bi bi-plus-lg"></i> Add Student
+    </a>
+</div>
+
+<div class="edu-card">
+    @if (Model == null || !Model.Any())
+    {
+        <div style="text-align:center; padding:48px 0; color:var(--text-muted);">
+            <i class="bi bi-people" style="font-size:48px; display:block; margin-bottom:16px;"></i>
+            <div style="font-size:15px; font-weight:600;">No students yet</div>
+            <div style="font-size:13px; margin-top:4px;">Add your first student to get started</div>
+        </div>
+    }
+    else
+    {
+        <table class="edu-table">
+            <thead>
+                <tr>
+                    <th>Personal ID</th>
+                    <th>Full Name</th>
+                    <th>Class</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="badge-edu badge-blue">@student.PersonalId</span>
+                        </td>
+                        <td style="font-weight:600;">@student.FullName</td>
+                        <td>
+                            <span class="badge-edu badge-green">@student.SchoolClass?.Name</span>
+                        </td>
+                        <td style="text-align:right;">
+                            <form asp-action="DeleteStudent" asp-controller="Admin" method="post"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Delete @student.FirstName @student.LastName?')">
+                                <input type="hidden" name="id" value="@student.Id" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-danger-sm">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

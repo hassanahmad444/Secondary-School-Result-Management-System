@@ -1,0 +1,67 @@
+@model Secondary_School_Result_Management_System.ViewModel.CreateStudentViewModel
+@{
+    ViewData["Title"] = "Add Student";
+}
+
+<div style="max-width:600px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Add Student</div>
+            <div class="section-sub">Fill in the details to enroll a new student</div>
+        </div>
+        <a href="/Admin/Students" class="btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="edu-card">
+        <form asp-action="CreateStudent" asp-controller="Admin" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div>
+                    <label class="form-label-edu">First Name</label>
+                    <input asp-for="FirstName" class="form-control-edu" placeholder="e.g. Chukwuemeka" />
+                    <span asp-validation-for="FirstName" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+                <div>
+                    <label class="form-label-edu">Last Name</label>
+                    <input asp-for="LastName" class="form-control-edu" placeholder="e.g. Okonkwo" />
+                    <span asp-validation-for="LastName" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Middle Name <span style="color:var(--text-muted); font-weight:400;">(Optional)</span></label>
+                <input asp-for="MiddleName" class="form-control-edu" placeholder="e.g. Ifeanyi" />
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Personal ID</label>
+                <input asp-for="PersonalId" class="form-control-edu" placeholder="e.g. STU/2024/001" />
+                <span asp-validation-for="PersonalId" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="margin-bottom:24px;">
+                <label class="form-label-edu">Class</label>
+                <select asp-for="SchoolClassId" class="form-control-edu">
+                    <option value="">-- Select Class --</option>
+                    @foreach (var cls in ViewBag.Classes as List<Secondary_School_Result_Management_System.Models.Entities.SchoolClass> ?? new())
+                    {
+                        <option value="@cls.Id">@cls.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="SchoolClassId" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-person-plus-fill"></i> Enroll Student
+                </button>
+                <a href="/Admin/Students" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

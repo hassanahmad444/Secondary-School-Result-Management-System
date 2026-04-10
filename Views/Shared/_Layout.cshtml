@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EduResult Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --navy: #0f1f3d;
+            --navy-light: #162848;
+            --navy-border: #1e3557;
+            --accent: #00c896;
+            --accent-dim: #00c89620;
+            --accent-hover: #00b082;
+            --gold: #f5a623;
+            --danger: #ff4d6d;
+            --text-primary: #e8edf5;
+            --text-muted: #7a92b4;
+            --card-bg: #162848;
+            --sidebar-width: 260px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a1628;
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar-width);
+            min-height: 100vh;
+            background: var(--navy);
+            border-right: 1px solid var(--navy-border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 100;
+        }
+
+        .sidebar-brand {
+            padding: 24px 20px 20px;
+            border-bottom: 1px solid var(--navy-border);
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .brand-icon {
+            width: 38px; height: 38px;
+            background: linear-gradient(135deg, var(--accent), #0099ff);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #fff;
+            flex-shrink: 0;
+        }
+
+        .brand-text {
+            line-height: 1.2;
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text-primary);
+            letter-spacing: -0.3px;
+        }
+
+        .brand-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+        }
+
+        .nav-section-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            padding: 12px 8px 6px;
+        }
+
+        .nav-item {
+            margin-bottom: 2px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            color: var(--text-muted) !important;
+            font-size: 13.5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--navy-light);
+            color: var(--text-primary) !important;
+        }
+
+        .nav-link.active {
+            background: var(--accent-dim);
+            color: var(--accent) !important;
+            font-weight: 600;
+        }
+
+        .nav-link.active .nav-icon {
+            color: var(--accent);
+        }
+
+        .nav-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid var(--navy-border);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            background: var(--navy-light);
+        }
+
+        .user-avatar {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #0099ff);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700; color: #fff;
+            flex-shrink: 0;
+        }
+
+        .user-info { flex: 1; min-width: 0; }
+
+        .user-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-role {
+            font-size: 10px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: var(--navy);
+            border-bottom: 1px solid var(--navy-border);
+            padding: 0 28px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-body {
+            padding: 28px;
+            flex: 1;
+        }
+
+        /* ── CARDS ── */
+        .edu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--navy-border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--navy-border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .stat-card:hover { border-color: var(--accent); }
+
+        .stat-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .stat-icon.green { background: #00c89618; color: var(--accent); }
+        .stat-icon.blue { background: #0099ff18; color: #0099ff; }
+        .stat-icon.gold { background: #f5a62318; color: var(--gold); }
+        .stat-icon.red { background: #ff4d6d18; color: var(--danger); }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+            font-family: 'DM Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* ── TABLES ── */
+        .edu-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .edu-table thead th {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--navy-border);
+            white-space: nowrap;
+        }
+
+        .edu-table tbody td {
+            padding: 14px 16px;
+            font-size: 13.5px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--navy-border);
+        }
+
+        .edu-table tbody tr:last-child td { border-bottom: none; }
+
+        .edu-table tbody tr:hover td { background: var(--navy-light); }
+
+        /* ── BUTTONS ── */
+        .btn-accent {
+            background: var(--accent);
+            color: #0a1628;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-accent:hover { background: var(--accent-hover); color: #0a1628; }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            border: 1px solid var(--navy-border);
+            border-radius: 8px;
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+            text-decoration: none;
+        }
+
+        .btn-ghost:hover { border-color: var(--text-muted); color: var(--text-primary); }
+
+        .btn-danger-sm {
+            background: #ff4d6d18;
+            color: var(--danger);
+            border: 1px solid #ff4d6d30;
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn-danger-sm:hover { background: #ff4d6d30; }
+
+        /* ── FORMS ── */
+        .form-label-edu {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .form-control-edu {
+            width: 100%;
+            background: var(--navy);
+            border: 1px solid var(--navy-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 13.5px;
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: border-color 0.15s;
+            outline: none;
+        }
+
+        .form-control-edu:focus { border-color: var(--accent); }
+        .form-control-edu::placeholder { color: var(--text-muted); }
+
+        select.form-control-edu option { background: var(--navy); }
+
+        /* ── BADGES ── */
+        .badge-edu {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-green { background: #00c89620; color: var(--accent); }
+        .badge-blue { background: #0099ff20; color: #0099ff; }
+        .badge-gold { background: #f5a62320; color: var(--gold); }
+
+        /* ── ALERTS ── */
+        .alert-edu-success {
+            background: #00c89615;
+            border: 1px solid #00c89630;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--accent);
+            font-size: 13.5px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .section-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* ── LOGOUT FORM ── */
+        .logout-btn {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            transition: color 0.15s;
+        }
+        .logout-btn:hover { color: var(--danger); }
+    </style>
+</head>
+<body>
+
+    @if (User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <a class="brand-logo" href="/">
+                    <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                    <div class="brand-text">
+                        <div class="brand-name">EduResult Pro</div>
+                        <div class="brand-sub">Management System</div>
+                    </div>
+                </a>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Main</div>
+                <div class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" ? "active" : "")"
+                       href="/Admin">
+                        <i class="bi bi-grid-fill nav-icon"></i> Dashboard
+                    </a>
+                </div>
+
+                @if (User.IsInRole("Admin"))
+                {
+                    <div class="nav-section-label">Management</div>
+                    <div class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Students" ? "active" : "")"
+                           href="/Admin/Students">
+                            <i class="bi bi-people-fill nav-icon"></i> Students
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Teachers" ? "active" : "")"
+                           href="/Admin/Teachers">
+                            <i class="bi bi-person-badge-fill nav-icon"></i> Teachers
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Classes" ? "active" : "")"
+                           href="/Admin/Classes">
+                            <i class="bi bi-building nav-icon"></i> Classes
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Subjects" ? "active" : "")"
+                           href="/Admin/Subjects">
+                            <i class="bi bi-book-fill nav-icon"></i> Subjects
+                        </a>
+                    </div>
+                    <div class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Terms" ? "active" : "")"
+                           href="/Admin/Terms">
+                            <i class="bi bi-calendar3 nav-icon"></i> Terms
+                        </a>
+                    </div>
+                }
+
+                <div class="nav-section-label">Results</div>
+                <div class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Result" ? "active" : "")"
+                       href="/Result/Enter">
+                        <i class="bi bi-pencil-square nav-icon"></i> Enter Results
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-avatar">@User.Identity.Name?.Substring(0, 1).ToUpper()</div>
+                    <div class="user-info">
+                        <div class="user-name">@User.Identity.Name</div>
+                        <div class="user-role">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <text>Administrator</text>
+                            }
+                            else if (User.IsInRole("Teacher"))
+                            {
+
+                                <text>Teacher</text>
+                            }
+                            else
+                            {
+
+                                <text>Student</text>
+                            }
+                        </div>
+                    </div>
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post">
+                        <button type="submit" class="logout-btn" title="Logout">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="main-content">
+            <div class="topbar">
+                <div class="page-title">@(ViewData["Title"] ?? "Dashboard")</div>
+                <div class="topbar-actions">
+                    <span style="font-size:12px; color:var(--text-muted);">
+                        <i class="bi bi-circle-fill" style="color:var(--accent); font-size:8px;"></i>
+                        System Online
+                    </span>
+                </div>
+            </div>
+            <div class="page-body">
+                @RenderBody()
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- NOT LOGGED IN -->
+        <div style="flex:1; display:flex; flex-direction:column;">
+            <nav style="background:var(--navy); border-bottom:1px solid var(--navy-border); padding:0 28px; height:64px; display:flex; align-items:center; justify-content:space-between;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="brand-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                    <span class="brand-name">EduResult Pro</span>
+                </div>
+                <a href="/Identity/Account/Login" class="btn-accent">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </a>
+            </nav>
+            <div style="flex:1;">
+                @RenderBody()
+            </div>
+        </div>
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

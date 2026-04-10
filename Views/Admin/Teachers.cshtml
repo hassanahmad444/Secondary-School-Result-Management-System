@@ -1,0 +1,62 @@
+@model List<Secondary_School_Result_Management_System.Models.Entities.Teacher>
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-edu-success">
+        <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+    </div>
+}
+
+<div class="section-header">
+    <div>
+        <div class="section-title">Teachers</div>
+        <div class="section-sub">Manage teaching staff accounts</div>
+    </div>
+    <a href="/Admin/CreateTeacher" class="btn-accent">
+        <i class="bi bi-plus-lg"></i> Add Teacher
+    </a>
+</div>
+
+<div class="edu-card">
+    @if (Model == null || !Model.Any())
+    {
+        <div style="text-align:center; padding:48px 0; color:var(--text-muted);">
+            <i class="bi bi-person-badge" style="font-size:48px; display:block; margin-bottom:16px;"></i>
+            <div style="font-size:15px; font-weight:600;">No teachers yet</div>
+            <div style="font-size:13px; margin-top:4px;">Add your first teacher to get started</div>
+        </div>
+    }
+    else
+    {
+        <table class="edu-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th style="text-align:right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var teacher in Model)
+                {
+                    <tr>
+                        <td style="font-weight:600;">@teacher.FirstName @teacher.LastName</td>
+                        <td style="text-align:right;">
+                            <form asp-action="DeleteTeacher" asp-controller="Admin" method="post"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Delete @teacher.FirstName @teacher.LastName?')">
+                                <input type="hidden" name="id" value="@teacher.Id" />
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn-danger-sm">
+                                    <i class="bi bi-trash3"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

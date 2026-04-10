@@ -1,0 +1,36 @@
+@model Secondary_School_Result_Management_System.ViewModel.CreateSubjectViewModel
+@{
+    ViewData["Title"] = "Add Subject";
+}
+
+<div style="max-width:500px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Add Subject</div>
+            <div class="section-sub">Create a new school subject</div>
+        </div>
+        <a href="/Admin/Subjects" class="btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="edu-card">
+        <form asp-action="CreateSubject" asp-controller="Admin" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="margin-bottom:24px;">
+                <label class="form-label-edu">Subject Name</label>
+                <input asp-for="Name" class="form-control-edu" placeholder="e.g. Mathematics" />
+                <span asp-validation-for="Name" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-book-fill"></i> Create Subject
+                </button>
+                <a href="/Admin/Subjects" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

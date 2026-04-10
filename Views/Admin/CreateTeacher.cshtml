@@ -1,0 +1,59 @@
+@model Secondary_School_Result_Management_System.ViewModel.CreateTeacherViewModel
+@{
+    ViewData["Title"] = "Add Teacher";
+}
+
+<div style="max-width:600px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Add Teacher</div>
+            <div class="section-sub">Create a teacher account with login access</div>
+        </div>
+        <a href="/Admin/Teachers" class="btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="edu-card">
+        <form asp-action="CreateTeacher" asp-controller="Admin" method="post">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                <div>
+                    <label class="form-label-edu">First Name</label>
+                    <input asp-for="FirstName" class="form-control-edu" placeholder="e.g. Amaka" />
+                    <span asp-validation-for="FirstName" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+                <div>
+                    <label class="form-label-edu">Last Name</label>
+                    <input asp-for="LastName" class="form-control-edu" placeholder="e.g. Nwosu" />
+                    <span asp-validation-for="LastName" style="color:var(--danger); font-size:12px;"></span>
+                </div>
+            </div>
+
+            <div style="margin-bottom:16px;">
+                <label class="form-label-edu">Email Address</label>
+                <input asp-for="Email" type="email" class="form-control-edu" placeholder="e.g. amaka@school.com" />
+                <span asp-validation-for="Email" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="margin-bottom:24px;">
+                <label class="form-label-edu">Password</label>
+                <input asp-for="Password" type="password" class="form-control-edu" placeholder="Min 8 chars, uppercase, number, symbol" />
+                <span asp-validation-for="Password" style="color:var(--danger); font-size:12px;"></span>
+                <div style="font-size:11px; color:var(--text-muted); margin-top:6px;">
+                    <i class="bi bi-info-circle"></i> Password must contain uppercase, lowercase, number and special character
+                </div>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-person-badge-fill"></i> Create Teacher
+                </button>
+                <a href="/Admin/Teachers" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

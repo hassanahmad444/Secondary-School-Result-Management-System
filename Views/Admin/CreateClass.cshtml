@@ -1,0 +1,36 @@
+@model Secondary_School_Result_Management_System.ViewModel.CreateSchoolClassViewModel
+@{
+    ViewData["Title"] = "Add Class";
+}
+
+<div style="max-width:500px;">
+    <div class="section-header">
+        <div>
+            <div class="section-title">Add Class</div>
+            <div class="section-sub">Create a new school class</div>
+        </div>
+        <a href="/Admin/Classes" class="btn-ghost">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+
+    <div class="edu-card">
+        <form asp-action="CreateClass" asp-controller="Admin" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" style="color:var(--danger); font-size:13px; margin-bottom:16px;"></div>
+
+            <div style="margin-bottom:24px;">
+                <label class="form-label-edu">Class Name</label>
+                <input asp-for="Name" class="form-control-edu" placeholder="e.g. SS1A" />
+                <span asp-validation-for="Name" style="color:var(--danger); font-size:12px;"></span>
+            </div>
+
+            <div style="display:flex; gap:12px;">
+                <button type="submit" class="btn-accent">
+                    <i class="bi bi-building"></i> Create Class
+                </button>
+                <a href="/Admin/Classes" class="btn-ghost">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

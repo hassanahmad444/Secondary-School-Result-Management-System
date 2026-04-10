@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div style="margin-bottom:28px;">
+    <div style="font-size:22px; font-weight:800; color:var(--text-primary);">
+        Welcome back, Admin 👋
+    </div>
+    <div style="font-size:14px; color:var(--text-muted); margin-top:4px;">
+        Here's an overview of your school result management system
+    </div>
+</div>
+
+<div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;">
+    <div class="stat-card">
+        <div class="stat-icon green"><i class="bi bi-people-fill"></i></div>
+        <div>
+            <div class="stat-value">@ViewBag.StudentCount</div>
+            <div class="stat-label">Total Students</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon blue"><i class="bi bi-person-badge-fill"></i></div>
+        <div>
+            <div class="stat-value">@ViewBag.TeacherCount</div>
+            <div class="stat-label">Teachers</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon gold"><i class="bi bi-book-fill"></i></div>
+        <div>
+            <div class="stat-value">@ViewBag.SubjectCount</div>
+            <div class="stat-label">Subjects</div>
+        </div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon red"><i class="bi bi-building"></i></div>
+        <div>
+            <div class="stat-value">@ViewBag.ClassCount</div>
+            <div class="stat-label">Classes</div>
+        </div>
+    </div>
+</div>
+
+<div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+    <div class="edu-card">
+        <div style="font-size:14px; font-weight:700; margin-bottom:16px; color:var(--text-primary);">
+            Quick Actions
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="/Admin/CreateStudent" class="btn-accent" style="justify-content:center;">
+                <i class="bi bi-person-plus-fill"></i> Enroll New Student
+            </a>
+            <a href="/Admin/CreateTeacher" class="btn-ghost" style="justify-content:center;">
+                <i class="bi bi-person-badge-fill"></i> Add Teacher
+            </a>
+            <a href="/Result/Enter" class="btn-ghost" style="justify-content:center;">
+                <i class="bi bi-pencil-square"></i> Enter Results
+            </a>
+        </div>
+    </div>
+
+    <div class="edu-card">
+        <div style="font-size:14px; font-weight:700; margin-bottom:16px; color:var(--text-primary);">
+            System Setup
+        </div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="/Admin/Classes" class="btn-ghost" style="justify-content:center;">
+                <i class="bi bi-building"></i> Manage Classes
+            </a>
+            <a href="/Admin/Subjects" class="btn-ghost" style="justify-content:center;">
+                <i class="bi bi-book-fill"></i> Manage Subjects
+            </a>
+            <a href="/Admin/Terms" class="btn-ghost" style="justify-content:center;">
+                <i class="bi bi-calendar3"></i> Manage Terms
+            </a>
+        </div>
+    </div>
+</div>

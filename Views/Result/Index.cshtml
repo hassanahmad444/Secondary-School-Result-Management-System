@@ -1,0 +1,64 @@
+﻿@model List<Secondary_School_Result_Management_System.Models.Entities.Result>
+@{
+    ViewData["Title"] = "Results";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert-edu-success">
+        <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+    </div>
+}
+
+<div class="section-header">
+    <div>
+        <div class="section-title">Results</div>
+        <div class="section-sub">View entered results</div>
+    </div>
+    <a href="/Result/Enter" class="btn-accent">
+        <i class="bi bi-plus-lg"></i> Enter Result
+    </a>
+</div>
+
+<div class="edu-card">
+    @if (Model == null || !Model.Any())
+    {
+        <div style="text-align:center; padding:48px 0; color:var(--text-muted);">
+            <i class="bi bi-journal-text" style="font-size:48px; display:block; margin-bottom:16px;"></i>
+            <div style="font-size:15px; font-weight:600;">No results yet</div>
+            <div style="font-size:13px; margin-top:4px;">Enter results to see them here</div>
+        </div>
+    }
+    else
+    {
+        <table class="edu-table">
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Subject</th>
+                    <th>CA Score</th>
+                    <th>Exam Score</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var result in Model)
+                {
+                    <tr>
+                        <td style="font-weight:600;">@result.Student?.FullName</td>
+                        <td>@result.Subject?.Name</td>
+                        <td>@result.CAScore</td>
+                        <td>@result.ExamScore</td>
+                        <td style="font-weight:700; color:var(--accent);">@result.TotalScore</td>
+                        <td>
+                            <span class="badge-edu @(result.Grade == "A" || result.Grade == "B" ? "badge-green" : result.Grade == "C" ? "badge-blue" : "badge-gold")">
+                                @result.Grade
+                            </span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
